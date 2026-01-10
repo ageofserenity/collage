@@ -1,42 +1,36 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
     permissions:
-      contents: read # Allows GitHub to read your private code
-      packages: write # Allows GitHub to save the image to your account
+      contents: read
+      packages: write
 
     steps:
-      # 1. Download your entire folder from the repo
+      # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # --- ADD THIS STEP BELOW ---
-      # This creates a lowercase version of your name/repo
-      - name: Lowercase Repo Name
-        run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
-      # ---------------------------
-
-      # 2. Log in to GitHub's container storage (Internal Login)
-      - name: Log in to GitHub Container Registry
+      # 2. Log in to GitHub Container Registry
+      - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Build your folder into an image and push it to GitHub
+      # 3. Build & push image
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          # --- CHANGE THIS LINE BELOW ---
-
           tags: ghcr.io/${{ github.repository }}:latest
-    # tags: ghcr.io/${{ env.REPO_LC }}:
-    # We use "env.REPO_LC" instead of "github.repository"
-
-    # ------------------------------
-
-    # This names the image after your username and repo
-    #tags: ghcr.io/${{ github.repository }}:latest
