@@ -31,9 +31,12 @@ jobs:
           context: .
           push: true
           # --- CHANGE THIS LINE BELOW ---
-          # We use "env.REPO_LC" instead of "github.repository"
-          tags: ghcr.io/${{ env.REPO_LC }}:latest
-          # ------------------------------
 
-          # This names the image after your username and repo
-          #tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:latest
+    # tags: ghcr.io/${{ env.REPO_LC }}:
+    # We use "env.REPO_LC" instead of "github.repository"
+
+    # ------------------------------
+
+    # This names the image after your username and repo
+    #tags: ghcr.io/${{ github.repository }}:latest
