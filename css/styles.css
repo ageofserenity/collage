@@ -2,6 +2,8 @@
   --gap: 12px;
   --radius: 8px;
   --bg: #0f1720;
+  --page-pad: 28px;
+  --margin-b: 75px;
 }
 
 /* base */
@@ -13,23 +15,46 @@ body {
   height: 100%;
   margin: 0;
   background: var(--bg);
+  color: #fff;
 }
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* top-level page container centers collages and allows scrolling */
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: var(--page-pad);
+}
+
+/* header */
+.page-header {
+  text-align: center;
+  max-width: 980px;
+}
+.page-header h1 {
+  margin: 8px 0 4px;
+  font-size: 5rem;
+}
+.page-header .lead {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 2rem;
 }
 
 /* collage container: centered and ~75% of viewport height and width */
 .collage {
-  /* target 75% of viewport width; cap with a sensible max */
-  width: min(2350px, 250vw);
-  height: 85vh; /* occupies 75% of the window height */
+  /* target ~75% of viewport width; cap with a sensible max */
+  width: min(2400px, 75vw);
+  height: 75vh; /* occupies 75% of the window height */
   display: grid;
   gap: var(--gap);
+  margin-bottom: var(--margin-b);
 
   /* 4 columns × 4 rows grid gives room for spanning */
   grid-template-columns: repeat(4, 1fr);
@@ -40,9 +65,11 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.03));
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+
+  /* center each collage horizontally inside the page column layout  with margin 0 auto if needed*/
 }
 
-/* Placement: 4 vertical slots (span 2 rows), 3 horizontal wide slots (span 2 columns), 2 single cells */
+/* Placement for 8-slot mosaic (4 vertical, 2 horizontal, 2 singles) */
 .item1 {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
@@ -68,20 +95,16 @@ body {
 .item6 {
   grid-column: 2 / span 2;
   grid-row: 2 / span 1;
-} /* horizontal (mid) */
-.item7 {
-  grid-column: 2 / span 2;
-  grid-row: 3 / span 1;
-} /* horizontal (lower middle) */
+} /* horizontal (mid middle) */
 
-.item8 {
+.item7 {
   grid-column: 2 / span 1;
-  grid-row: 4 / span 1;
-} /* single (bottom-left-middle) */
-.item9 {
+  grid-row: 3 / span 2;
+} /* single (lower-middle-left) */
+.item8 {
   grid-column: 3 / span 1;
-  grid-row: 4 / span 1;
-} /* single (bottom-right-middle) */
+  grid-row: 3 / span 2;
+} /* single (lower-middle-right) */
 
 /* item visuals */
 .item {
@@ -115,14 +138,30 @@ body {
   outline-offset: 3px;
 }
 
-/* small visual emphasis for center horizontal block */
+/* small visual emphasis for the middle horizontal block */
 .item6 {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
   transform-origin: center;
 }
 
+/* footer */
+.page-footer {
+  color: #94a3b8;
+  font-size: 4rem;
+  text-align: center;
+}
+
+.page-footer p {
+  margin-bottom: var(--margin-b);
+  margin-top: 0;
+}
+
 /* Responsive: for narrow screens switch to a simpler stacked layout that keeps visual mosaic */
 @media (max-width: 900px) {
+  .page {
+    gap: 20px;
+    padding: 18px;
+  }
   .collage {
     height: auto;
     width: calc(100% - 40px);
@@ -142,8 +181,8 @@ body {
   }
 
   /* ensure smaller items occupy single columns */
-  .item8,
-  .item9 {
+  .item7,
+  .item8 {
     grid-column: auto;
   }
 }
