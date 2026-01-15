@@ -1,0 +1,6 @@
+name: collage-project
+services:
+  app:
+    image: ghcr.io/ageofserenity/collage:latest
+    ports:
+      - "8080:80"
