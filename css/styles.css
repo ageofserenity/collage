@@ -47,6 +47,10 @@ body {
   font-size: 2rem;
 }
 
+.page-header .lead2 {
+  font-size: 1rem;
+}
+
 /* collage container: centered and ~75% of viewport height and width */
 .collage {
   /* target ~75% of viewport width; cap with a sensible max */
